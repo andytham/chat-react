@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack ",
+    "build": "webpack --watch",
     "start": "node ./server/app.js",
     "dev": "nodemon ./server/app.js"
   },
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "express": "^4.16.3",
+    "material-ui": "^0.20.1",
     "path": "^0.12.7",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
