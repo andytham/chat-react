@@ -10,8 +10,8 @@ class Chatroom extends Component {
        input: ""
     }
     this.onInput = this.onInput.bind(this)
-  this.onSendMessage = this.onSendMessage.bind(this)
-  }
+    this.onSendMessage = this.onSendMessage.bind(this)
+}
 
   onInput(e) {
     this.setState({

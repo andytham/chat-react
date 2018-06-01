@@ -10,8 +10,13 @@ const Chatroom = require('./Chatroom.js');
 
 io.on('connection', function(socket){
 
-  socket.on('join', function(callback){
-    callback(Chatroom().getChatHistory());
+  // socket.on('join', function(callback){
+  //   return callback(Chatroom().getChatHistory());
+  // })
+
+  socket.on('join', function(){
+    console.log('emitting history');
+    io.emit('history', "TEST")
   })
 
   console.log('a user connected');
@@ -21,8 +26,9 @@ io.on('connection', function(socket){
   });
   socket.on('message', function(msg){
     console.log('message: ' + msg);
-    io.emit('message', handleMsg);
     Chatroom().addEntry(msg)
+    io.emit('message', cb);
+
   });
 
 })
