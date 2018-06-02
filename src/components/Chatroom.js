@@ -11,8 +11,12 @@ class Chatroom extends Component {
     }
     this.onInput = this.onInput.bind(this)
     this.onSendMessage = this.onSendMessage.bind(this)
-}
+    this.renderChat = this.renderChat.bind(this)
+  }
 
+  componentDidMount(){
+
+  }
   onInput(e) {
     this.setState({
       input: e.target.value
@@ -34,12 +38,22 @@ class Chatroom extends Component {
       return this.setState({ input: '' })
     })
   }
+  renderChat(){
+    console.log("rendering chat");
+    console.log(this.props);
+    let count = 0;
+    let history = (this.props.chatHistory.map(entry => {
+      return (<li key={count++}> {entry} </li>)
+    }))
+    console.log('history', history);
+    return history
+  }
 
   render() {
     return (
       <div className="chatroom">
         <ul className="chat-history">
-
+          {this.state.chatHistory ? this.renderChat() : "loading"}
         </ul>
         <TextField
           textareaStyle={{ color: '#fafafa' }}

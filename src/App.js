@@ -30,7 +30,7 @@ class App extends React.Component {
 
   updateChat(entry){
     this.setState({
-      chatHistory: this.state.chatHistory.concat(entry)
+      chatHistory: entry
     })
   }
 
@@ -44,6 +44,7 @@ class App extends React.Component {
 
   onSendMessage(msg, cb){
     this.state.client.message(msg, cb)
+    this.state.client.receive(this.updateChat)
   }
 
 
@@ -69,6 +70,7 @@ class App extends React.Component {
 
   render(){
     console.log("app js is rendering");
+    console.log("APP STATE", this.state);
     return(
       <BrowserRouter>
         <div className="App">

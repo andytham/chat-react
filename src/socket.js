@@ -4,8 +4,10 @@ export default function() {
   // const socket = io.connect('http://localhost:3000')
   const socket = io();
 
-  function receive(cb){
-    socket.on('message', cb)
+  function receive(updateChat){
+    socket.on('message', msg => {
+      updateChat(msg)
+    })
   }
   function message(msg, cb){
     console.log("socket msg");
@@ -17,8 +19,7 @@ export default function() {
   }
 
   function history(updateChat){
-
-    return socket.on('history', function(hist){
+    socket.on('history', function(hist){
       updateChat(hist)
     })
   }
