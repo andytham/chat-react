@@ -81,13 +81,11 @@ class App extends React.Component {
             />
 
           </MuiThemeProvider> */}
-          <MuiThemeProvider>
             <Chatroom
               chatHistory={this.state.chatHistory}
               onSendMessage={
                 this.onSendMessage}
             />
-          </MuiThemeProvider>
         </div>
       </BrowserRouter>
     )

@@ -1,5 +1,22 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
+
+import styled from 'styled-components';
+// import './Chatroom.css';
+const ChatWindow = styled.div`
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  width: 420px;
+  box-sizing: border-box;
+  border: 1px solid black;
+`
+
+const ChatHistory = styled.ul`
+  list-style-type: none;
+`
 
 class Chatroom extends Component {
   constructor(props){
@@ -46,16 +63,16 @@ class Chatroom extends Component {
 
   render() {
     return (
-      <div className="chatroom">
+      <ChatWindow className="chatroom">
+        <ChatHistory>
         <ul className="chat-history">
           {this.state.chatHistory ? this.renderChat() : "loading"}
         </ul>
+      </ChatHistory>
         <TextField
-          textareaStyle={{ color: '#fafafa' }}
-          hintStyle={{ color: '#fafafa' }}
-          floatingLabelStyle={{ color: '#fafafa' }}
-          hintText="Enter a message."
-          floatingLabelText="Enter a message."
+
+          autoFocus={true}
+          placeholder="Enter a message."
 
           rows={4}
           rowsMax={4}
@@ -63,7 +80,7 @@ class Chatroom extends Component {
           value={this.state.input}
           onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
         />
-      </div>
+      </ChatWindow>
     );
   }
 
