@@ -28,8 +28,9 @@ class Chatroom extends Component {
 
     this.props.onSendMessage(this.state.input, (err) => {
       console.log("callback running");
-      if (err)
-        return console.error(err)
+      if (err){
+        console.log('error');
+        return console.error(err)}
       return this.setState({ input: '' })
     })
   }

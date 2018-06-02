@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 3000;
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-const Chatroom = require('./Chatroom.js');
-
+const cr = require('./Chatroom.js');
+let Chatroom = cr()
 io.on('connection', function(socket){
 
   // socket.on('join', function(callback){
@@ -16,7 +16,7 @@ io.on('connection', function(socket){
 
   socket.on('join', function(){
     console.log('emitting history');
-    io.emit('history', Chatroom().getChatHistory())
+    io.emit('history', Chatroom.getChatHistory())
   })
 
   console.log('a user connected');
@@ -26,8 +26,8 @@ io.on('connection', function(socket){
   });
   socket.on('message', function(msg){
     console.log('message: ' + msg);
-    Chatroom().addEntry(msg)
-    io.emit('message', cb);
+    Chatroom.addEntry(msg)
+    io.emit('message', Chatroom.getChatHistory());
 
   });
 

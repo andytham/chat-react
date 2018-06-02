@@ -17,6 +17,7 @@ class App extends React.Component {
     this.onJoin = this.onJoin.bind(this)
     this.getHistory = this.getHistory.bind(this)
     this.updateChat = this.updateChat.bind(this)
+    this.onSendMessage = this.onSendMessage.bind(this)
   }
   componentDidMount(){
     this.onJoin();
@@ -39,6 +40,10 @@ class App extends React.Component {
   onJoin(){
     this.state.client.join();
     this.getHistory();
+  }
+
+  onSendMessage(msg, cb){
+    this.state.client.message(msg, cb)
   }
 
 
@@ -75,6 +80,12 @@ class App extends React.Component {
             />
 
           </MuiThemeProvider> */}
+          <MuiThemeProvider>
+            <Chatroom
+              chatHistory={this.state.chatHistory}
+              onSendMessage={this.onSendMessage}
+            />
+          </MuiThemeProvider>
         </div>
       </BrowserRouter>
     )

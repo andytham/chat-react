@@ -9,7 +9,7 @@ export default function() {
   }
   function message(msg, cb){
     console.log("socket msg");
-    socket.emit("message", msg, cb)
+    socket.emit("message", msg)
   }
 
   function join(){
