@@ -16,7 +16,7 @@ io.on('connection', function(socket){
 
   socket.on('join', function(){
     console.log('emitting history');
-    io.emit('history', "TEST")
+    io.emit('history', Chatroom().getChatHistory())
   })
 
   console.log('a user connected');

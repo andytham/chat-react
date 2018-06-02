@@ -10,20 +10,32 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      client: socket()
+      client: socket(),
+      chatHistory: []
     }
     // this.renderChat = this.renderChat.bind(this)
     this.onJoin = this.onJoin.bind(this)
     this.getHistory = this.getHistory.bind(this)
+    this.updateChat = this.updateChat.bind(this)
   }
+  componentDidMount(){
+    this.onJoin();
+  }
+
   getHistory(){
     console.log('getting history');
-    this.state.client.history();
+    this.state.client.history(this.updateChat)
   }
 
-  componentDidMount(){
+  updateChat(entry){
+    this.setState({
+      chatHistory: this.state.chatHistory.concat(entry)
+    })
   }
 
+  componentDidUpdate(){
+    console.log(this.state);
+  }
   onJoin(){
     this.state.client.join();
     this.getHistory();
@@ -51,12 +63,6 @@ class App extends React.Component {
   // }
 
   render(){
-    if(this.state.client){
-      console.log('getting history');
-      this.onJoin()
-    } else {
-      console.log('waiting for client')
-    }
     console.log("app js is rendering");
     return(
       <BrowserRouter>

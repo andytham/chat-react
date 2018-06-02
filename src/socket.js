@@ -16,9 +16,10 @@ export default function() {
     socket.emit("join", "hmm")
   }
 
-  function history(){
-    socket.on('history', function(hist){
-      console.log("this is history on grab", hist);
+  function history(updateChat){
+
+    return socket.on('history', function(hist){
+      updateChat(hist)
     })
   }
 
