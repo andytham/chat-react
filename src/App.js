@@ -35,7 +35,6 @@ class App extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(this.state);
   }
   onJoin(){
     this.state.client.join();
@@ -69,8 +68,8 @@ class App extends React.Component {
   // }
 
   render(){
-    console.log("app js is rendering");
-    console.log("APP STATE", this.state);
+    // console.log("app js is rendering");
+    // console.log("APP STATE", this.state);
     return(
       <BrowserRouter>
         <div className="App">
@@ -85,7 +84,8 @@ class App extends React.Component {
           <MuiThemeProvider>
             <Chatroom
               chatHistory={this.state.chatHistory}
-              onSendMessage={this.onSendMessage}
+              onSendMessage={
+                this.onSendMessage}
             />
           </MuiThemeProvider>
         </div>

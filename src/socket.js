@@ -10,7 +10,6 @@ export default function() {
     })
   }
   function message(msg, cb){
-    console.log("socket msg");
     socket.emit("message", msg)
   }
 
