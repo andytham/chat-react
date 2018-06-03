@@ -1,0 +1,11 @@
+*{
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+#root{
+  height: 100vh;
+}
+
+.App{
+  height: 100%;
+}

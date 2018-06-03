@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import socket from './socket.js';
-
+import './App.css';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -14,6 +14,7 @@ class App extends React.Component {
       chatHistory: []
     }
     // this.renderChat = this.renderChat.bind(this)
+    this.panel = React.createRef();
     this.onJoin = this.onJoin.bind(this)
     this.getHistory = this.getHistory.bind(this)
     this.updateChat = this.updateChat.bind(this)
@@ -73,7 +74,6 @@ class App extends React.Component {
     return(
       <BrowserRouter>
         <div className="App">
-          chatroom below
           {/* <MuiThemeProvider>
             <Chatroom
               chatHistory={chatHistory}

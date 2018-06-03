@@ -7,11 +7,11 @@ module.exports = function () {
 
   function addEntry(entry) {
     chatHistory = chatHistory.concat(entry)
-    console.log("added to chat history: ", chatHistory);
+    // console.log("added to chat history: ", chatHistory);
   }
 
   function getChatHistory() {
-    console.log("getting chat history: ", chatHistory);
+    // console.log("getting chat history: ", chatHistory);
     return chatHistory.slice()
   }
 
