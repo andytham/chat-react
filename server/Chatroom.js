@@ -1,5 +1,5 @@
 module.exports = function () {
-  let chatHistory = ['welcome to the chatroom!']
+  let chatHistory = [{user: 'server', msg: 'welcome to the chatroom!'}]
 
   // function broadcastMessage(message) {
   //   members.forEach(m => m.emit('message', message))

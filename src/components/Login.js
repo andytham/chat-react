@@ -7,8 +7,8 @@ class Login extends Component {
   constructor(){
     super();
     this.state = {
-      username: '',
-      password: '',
+      username: 'guest',
+      password: 'guest',
       loginSuccess: false
     }
     this.onSubmit = this.onSubmit.bind(this)
@@ -58,7 +58,6 @@ class Login extends Component {
         <div className="login-form">
           <TextField
             label="username"
-            defaultValue="guest"
             // placeholder="username"
             rows={1}
             onChange={this.usernameInput}
@@ -70,7 +69,6 @@ class Login extends Component {
             label="password"
             // placeholder="password"
             type="password"
-            defaultValue="guest"
             rows={1}
             onChange={this.passwordInput}
             value={this.state.password}

@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 let cssLoaded = false
 import './Chatroom.css';
 
-
+import ProfilePreview from './ProfilePreview';
 
 class Chatroom extends Component {
   constructor(props){
@@ -24,7 +24,7 @@ class Chatroom extends Component {
     this.scrollChatToBottom = this.scrollChatToBottom.bind(this)
   }
   componentWillReceiveProps(nextProps){
-    console.log(nextProps);
+    // console.log(nextProps);
     if(this.props.username != nextProps.username){
       this.setState({
         username: nextProps.username
@@ -51,7 +51,7 @@ class Chatroom extends Component {
       return
     }
 
-    this.props.onSendMessage(this.state.input, (err) => {
+    this.props.onSendMessage({user: this.state.username, msg: this.state.input}, (err) => {
       if (err){
         return console.error(err)}
       return this.setState({ input: '' })
@@ -62,7 +62,7 @@ class Chatroom extends Component {
   renderChat(){
     let count = 0;
     let history = (this.props.chatHistory.map(entry => {
-      return (<li className="entry" key={count++}> {entry} </li>)
+      return (<li className="entry" key={count++}> {entry.user}: {entry.msg} </li>)
     }))
     return history
   }
@@ -73,7 +73,7 @@ class Chatroom extends Component {
 
   render() {
     console.log('chatroom render');
-    console.log('current user', this.props.username);
+    // console.log('current user', this.props.username);
     const poop = this.props.username
     // console.log(poop);
     // this.setState({
@@ -87,6 +87,7 @@ class Chatroom extends Component {
     // }
     return (
       <div className="chat-window">
+        <ProfilePreview username={this.state.username}/>
         <div className="chat-title"></div>
         <ul className="chat-history" ref={this.chat}>
             {this.state.chatHistory ? this.renderChat() : "loading"}

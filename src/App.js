@@ -9,6 +9,7 @@ import './components/Chatroom.css';
 
 import Register from './components/Register';
 import Login from './components/Login';
+import Profile from './components/Profile';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -58,7 +59,7 @@ class App extends React.Component {
     this.setState({
       username: username
     })
-    console.log(this.state.username, 'appjs username');
+    // console.log(this.state.username, 'appjs username');
   }
 
   // onJoin(success){
@@ -111,6 +112,7 @@ class App extends React.Component {
               username={this.state.username}
             />} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/profile" render={() => <Profile username={this.state.username}/>} />
           </Switch>
         </div>
       </BrowserRouter>
