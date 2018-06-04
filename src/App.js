@@ -58,6 +58,7 @@ class App extends React.Component {
     this.setState({
       username: username
     })
+    console.log(this.state.username, 'appjs username');
   }
 
   // onJoin(success){

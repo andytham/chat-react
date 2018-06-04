@@ -14,8 +14,6 @@ class Login extends Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.usernameInput = this.usernameInput.bind(this)
     this.passwordInput = this.passwordInput.bind(this)
-    this.redirectRegister = this.redirectRegister.bind(this)
-    this.redirect = this.redirect.bind(this)
   }
 
   componentDidMount(){
@@ -26,15 +24,8 @@ class Login extends Component {
 
   }
 
-  redirect(){
-    if(this.state.loginSuccess){
-      return <Redirect to='/chat' />
-    }
-  }
-
-
   onSubmit(){
-    axios.get(`http://localhost:8080/users/${this.state.username}`)
+    axios.get(`http://localhost:8080/users/name/${this.state.username}`)
     .then(data => {
       if(data.data.username == this.state.username && data.data.password == this.state.password){
         this.setState({loginSuccess: true})
@@ -58,9 +49,6 @@ class Login extends Component {
     })
   }
 
-  redirectRegister(){
-    return <Redirect to="/register"/>
-  }
   render() {
     if(this.state.loginSuccess){
       return <Redirect to='/chat'/>;

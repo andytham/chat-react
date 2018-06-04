@@ -14,7 +14,8 @@ class Chatroom extends Component {
     const { chatHistory } = props
     this.state = {
        chatHistory,
-       input: ""
+       input: "",
+       username: ""
     }
     this.chat = React.createRef();
     this.onInput = this.onInput.bind(this)
@@ -22,8 +23,17 @@ class Chatroom extends Component {
     this.renderChat = this.renderChat.bind(this)
     this.scrollChatToBottom = this.scrollChatToBottom.bind(this)
   }
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+    if(this.props.username != nextProps.username){
+      this.setState({
+        username: nextProps.username
+      })
+    }
+  }
+  componentDidMount(){
 
-  componentDidMount(){}
+  }
 
   componentDidUpdate(){
 
@@ -63,7 +73,18 @@ class Chatroom extends Component {
 
   render() {
     console.log('chatroom render');
-
+    console.log('current user', this.props.username);
+    const poop = this.props.username
+    // console.log(poop);
+    // this.setState({
+    //   username: poop
+    // })
+    // console.log(this.state.username, 'state ussername');
+    // if(!this.state.username){
+    //   this.setState({
+    //     username: this.props.username
+    //   })
+    // }
     return (
       <div className="chat-window">
         <div className="chat-title"></div>
