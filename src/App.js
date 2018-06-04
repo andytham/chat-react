@@ -6,6 +6,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import socket from './socket.js';
 import './App.css';
 import './components/Chatroom.css';
+
+import Register from './components/Register';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -96,6 +98,7 @@ class App extends React.Component {
               onSendMessage={
                 this.onSendMessage}
             />} />
+            <Route exact path="/register" component={Register} />
           </Switch>
         </div>
       </BrowserRouter>
