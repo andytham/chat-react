@@ -8,13 +8,15 @@ import './App.css';
 import './components/Chatroom.css';
 
 import Register from './components/Register';
+import Login from './components/Login';
 class App extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
       client: socket(),
-      chatHistory: []
+      chatHistory: [],
+      username: ""
     }
     // this.renderChat = this.renderChat.bind(this)
     this.panel = React.createRef();
@@ -22,6 +24,7 @@ class App extends React.Component {
     this.getHistory = this.getHistory.bind(this)
     this.updateChat = this.updateChat.bind(this)
     this.onSendMessage = this.onSendMessage.bind(this)
+    this.onSuccess = this.onSuccess.bind(this)
   }
   componentDidMount(){
     this.onJoin();
@@ -50,6 +53,12 @@ class App extends React.Component {
     this.state.client.receive(this.updateChat)
   }
 
+  onSuccess(username){
+    console.log("sucess");
+    this.setState({
+      username: username
+    })
+  }
 
   // onJoin(success){
   //   return this.state.client.join(chatHistory => {
@@ -93,10 +102,12 @@ class App extends React.Component {
           </MuiThemeProvider> */}
 
           <Switch>
+            <Route exact path="/" render={() => <Login onSuccess={this.onSuccess} />} />
             <Route exact path="/chat" render={() =>  <Chatroom
               chatHistory={this.state.chatHistory}
               onSendMessage={
                 this.onSendMessage}
+              username={this.state.username}
             />} />
             <Route exact path="/register" component={Register} />
           </Switch>
