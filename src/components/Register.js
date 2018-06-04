@@ -12,6 +12,7 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.usernameInput = this.usernameInput.bind(this)
     this.passwordInput = this.passwordInput.bind(this)
+    this.passwordInput2 = this.passwordInput2.bind(this)
   }
 
   usernameInput(e){
@@ -23,6 +24,11 @@ class Register extends Component {
   passwordInput(e){
     this.setState({
       password: e.target.value
+    })
+  }
+  passwordInput2(e){
+    this.setState({
+      password2: e.target.value
     })
   }
   onSubmit(){
