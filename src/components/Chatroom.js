@@ -3,7 +3,8 @@ import * as ReactDOM from 'react-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import './Chatroom.css';
+let cssLoaded = false
+// import './Chatroom.css';
 
 
 
@@ -30,7 +31,7 @@ class Chatroom extends Component {
     // const height = chat.clientHeight;
     // const maxScrollTop = scrollHeight - height;
     // ReactDOM.findDOMNode(chat).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
-    console.log(this.chat.current);
+    // console.log(this.chat.current);
     // const tesNode = ReactDOM.findDOMNode(this.chat)
     //
     //   tesNode.scrollTo(0, tesNode.scrollHeight);
@@ -69,6 +70,11 @@ class Chatroom extends Component {
   }
 
   render() {
+    console.log('chatroom render');
+    if (cssLoaded === false) {
+        cssLoaded = true;
+        import('./Chatroom.css');
+    }
     return (
       <div className="chat-window">
         <div className="chat-title"></div>

@@ -1,10 +1,11 @@
 import React from 'react';
 import Chatroom from './components/Chatroom';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import socket from './socket.js';
 import './App.css';
+import './components/Chatroom.css';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -69,6 +70,13 @@ class App extends React.Component {
   // }
 
   render(){
+    const ChatroomComponent = () => {
+      <Chatroom
+        chatHistory={this.state.chatHistory}
+        onSendMessage={
+          this.onSendMessage}
+      />
+    }
     // console.log("app js is rendering");
     // console.log("APP STATE", this.state);
     return(
@@ -81,11 +89,14 @@ class App extends React.Component {
             />
 
           </MuiThemeProvider> */}
-            <Chatroom
+
+          <Switch>
+            <Route exact path="/chat" render={() =>  <Chatroom
               chatHistory={this.state.chatHistory}
               onSendMessage={
                 this.onSendMessage}
-            />
+            />} />
+          </Switch>
         </div>
       </BrowserRouter>
     )

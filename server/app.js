@@ -36,9 +36,13 @@ app.use(express.static('build'));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + "../index.html"))
 })
+
 app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname + "/index.html"))
+  res.sendFile(path.join(__dirname, "../index.html"))
 })
+// app.get('/chat', (req, res) => {
+//   res.sendFile(path.join(__dirname + "/index.html"))
+// })
 server.listen(PORT, (err) => {
   // if (err) throw err;
   console.log(`listening on port ${PORT}`);
