@@ -9,3 +9,8 @@
 .App{
   height: 100%;
 }
+
+.error{
+  color: rgb(232, 42, 42);
+  text-align: center;
+}

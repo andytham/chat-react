@@ -43,7 +43,7 @@ class Register extends Component {
       })
     } else if(this.state.password != this.state.password2){
       this.setState({
-        error: "Passwords mismatch."
+        error: "Passwords do not match."
       })
     } else {
       self = this;
@@ -117,7 +117,7 @@ class Register extends Component {
           <Button onClick={this.onSubmit}>Register</Button>
           <Button href="/">Back</Button>
         </div>
-        <div>
+        <div className="error">
           {this.state.error}
         </div>
       </div>

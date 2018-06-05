@@ -11,7 +11,8 @@ class Login extends Component {
     this.state = {
       username: 'guest',
       password: 'guest',
-      loginSuccess: false
+      loginSuccess: false,
+      error: "",
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.usernameInput = this.usernameInput.bind(this)
@@ -19,15 +20,22 @@ class Login extends Component {
   }
 
   onSubmit(){
+    let self = this;
     axios.get(`http://localhost:8080/users/name/${this.state.username}`)
     .then(data => {
       if(data.data.username == this.state.username && data.data.password == this.state.password){
         this.setState({loginSuccess: true})
         this.props.onSuccess(this.state.username)
       } else {
-        console.log('details wrong'); }
+        self.setState({
+          error: 'Username and password do not match.'
+        })
+      }
     })
     .catch(err => {
+      self.setState({
+        error: 'Login attempt unsuccessful.'
+      })
       console.log(err);
     })
   }
@@ -73,6 +81,9 @@ class Login extends Component {
         <div className="login-buttons buttons">
           <Button onClick={this.onSubmit}>Login</Button>
           <Button href="/register">Register</Button>
+        </div>
+        <div className="error">
+          {this.state.error}
         </div>
       </div>
     );
