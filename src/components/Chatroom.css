@@ -1,5 +1,5 @@
 ul{
-  border: 1px green solid;
+  /* border: 1px green solid; */
   padding: 0;
   list-style-type: none;
   height: 100%;
@@ -8,9 +8,12 @@ ul{
 
 li {
 }
+
+
+
 .chat-window{
   margin: 0 auto;
-  width: 560px;
+  width: 460px;
   padding: 9px;
   border: 3px #FE6B8B solid;
   height: 95%;
@@ -18,8 +21,8 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-
 }
+
 .entry{
 
 }
@@ -32,7 +35,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 .chat-input{
   width: 360px;

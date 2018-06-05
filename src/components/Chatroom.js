@@ -7,7 +7,7 @@ let cssLoaded = false
 import './Chatroom.css';
 
 import { Redirect } from 'react-router-dom';
-import ProfilePreview from './ProfilePreview';
+import Profile from './Profile';
 
 class Chatroom extends Component {
   constructor(props){
@@ -94,7 +94,7 @@ class Chatroom extends Component {
     if (this.state.loggedIn && this.state.username) {
       return(
         <div className="chat-window">
-          <ProfilePreview username={this.state.username}/>
+          <Profile  username={this.state.username}/>
           <div className="chat-title"></div>
           <ul className="chat-history" ref={this.chat}>
               {this.state.chatHistory ? this.renderChat() : "loading"}

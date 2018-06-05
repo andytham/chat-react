@@ -1,0 +1,14 @@
+.profile{
+  position: absolute;
+  float: left;
+  top: 0;
+  left: 0;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name{
+  width:100px;
+  text-align: center;
+}
