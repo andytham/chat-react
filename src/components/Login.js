@@ -3,6 +3,8 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
+import './form.css';
+
 class Login extends Component {
   constructor(){
     super();
@@ -47,7 +49,7 @@ class Login extends Component {
     }
     return (
       <div className="login">
-        <div className="login-form">
+        <div className="login-form form">
           <TextField
             label="username"
             autoFocus
@@ -68,7 +70,7 @@ class Login extends Component {
             onKeyPress={e => (e.key === 'Enter' ? this.onSubmit() : null)}
           />
         </div>
-        <div className="login-buttons">
+        <div className="login-buttons buttons">
           <Button onClick={this.onSubmit}>Login</Button>
           <Button href="/register">Register</Button>
         </div>

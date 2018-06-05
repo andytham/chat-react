@@ -1,0 +1,17 @@
+.login{
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.form{
+  margin: 0 auto;
+}
+.register{
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons{
+  margin: 20px auto;
+}

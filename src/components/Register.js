@@ -83,7 +83,7 @@ class Register extends Component {
     }
     return (
       <div className="register">
-        <div>
+        <div className="form">
           <TextField
             label="username"
             // placeholder="username"
@@ -113,7 +113,7 @@ class Register extends Component {
             onKeyPress={e => (e.key === 'Enter' ? this.onSubmit() : null)}
           />
         </div>
-        <div>
+        <div className="buttons">
           <Button onClick={this.onSubmit}>Register</Button>
           <Button href="/">Back</Button>
         </div>
