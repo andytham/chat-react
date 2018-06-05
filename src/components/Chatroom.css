@@ -9,7 +9,13 @@ ul{
 li {
 }
 
+.blue{
+  color: rgb(1, 151, 208);
+}
 
+.red{
+  color: rgb(191, 37, 33);
+}
 
 .chat-window{
   margin: 0 auto;

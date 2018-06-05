@@ -33,7 +33,7 @@ class Profile extends Component {
       editing: false,
     })
     self = this;
-    axios.patch(`http://localhost:8080/users/name${this.state.oldName}`, {
+    axios.patch(`http://localhost:8080/users/name/${this.state.oldName}`, {
       username: this.state.input
     })
     .then(()=>{
