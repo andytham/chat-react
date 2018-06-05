@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 let cssLoaded = false
 import './Chatroom.css';
 
+import { Redirect } from 'react-router-dom';
 import ProfilePreview from './ProfilePreview';
 
 class Chatroom extends Component {
@@ -15,7 +16,8 @@ class Chatroom extends Component {
     this.state = {
        chatHistory,
        input: "",
-       username: ""
+       username: "",
+       loggedIn: true
     }
     this.chat = React.createRef();
     this.onInput = this.onInput.bind(this)
@@ -29,15 +31,19 @@ class Chatroom extends Component {
       this.setState({
         username: nextProps.username
       })
+    } else if (this.props.username == ""){
+      this.setState({
+        loggedIn: false
+      })
     }
   }
   componentDidMount(){
-
   }
 
   componentDidUpdate(){
-
-    this.chat.current.scrollTo(0, this.chat.current.scrollHeight)
+    if(this.state.username){
+      this.chat.current.scrollTo(0, this.chat.current.scrollHeight)
+    }
   }
   onInput(e) {
     this.setState({
@@ -72,9 +78,9 @@ class Chatroom extends Component {
   }
 
   render() {
-    console.log('chatroom render');
+    // console.log('chatroom render');
     // console.log('current user', this.props.username);
-    const poop = this.props.username
+    // const poop = this.props.username
     // console.log(poop);
     // this.setState({
     //   username: poop
@@ -85,32 +91,35 @@ class Chatroom extends Component {
     //     username: this.props.username
     //   })
     // }
-    return (
-      <div className="chat-window">
-        <ProfilePreview username={this.state.username}/>
-        <div className="chat-title"></div>
-        <ul className="chat-history" ref={this.chat}>
-            {this.state.chatHistory ? this.renderChat() : "loading"}
-        </ul>
-        <div className="input-wrapper">
-          <TextField
-            className="chat-input"
-            autoFocus={true}
-            placeholder="Enter a message."
-
-            rows={4}
-            rowsMax={4}
-            onChange={this.onInput}
-            value={this.state.input}
-            onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
-          />
-          <Button className="enter-msg" onClick={this.onSendMessage}>
-            Enter
-          </Button>
+    if (this.state.loggedIn && this.state.username) {
+      return(
+        <div className="chat-window">
+          <ProfilePreview username={this.state.username}/>
+          <div className="chat-title"></div>
+          <ul className="chat-history" ref={this.chat}>
+              {this.state.chatHistory ? this.renderChat() : "loading"}
+          </ul>
+          <div className="input-wrapper">
+            <TextField
+              className="chat-input"
+              autoFocus={true}
+              placeholder="Enter a message."
+              rows={4}
+              rowsMax={4}
+              onChange={this.onInput}
+              value={this.state.input}
+              onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
+            />
+            <Button className="enter-msg" onClick={this.onSendMessage}>
+              Enter
+            </Button>
+          </div>
         </div>
+      )
+    } else if (this.state.loggedIn){
+      return (<div>Redirecting...</div>)
+    } else { return <Redirect to="/" /> }
 
-      </div>
-    );
   }
 
 }

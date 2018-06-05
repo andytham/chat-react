@@ -58,6 +58,7 @@ class Login extends Component {
         <div className="login-form">
           <TextField
             label="username"
+            autoFocus
             // placeholder="username"
             rows={1}
             onChange={this.usernameInput}
