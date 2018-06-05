@@ -16,14 +16,6 @@ class Login extends Component {
     this.passwordInput = this.passwordInput.bind(this)
   }
 
-  componentDidMount(){
-
-  }
-
-  componentDidUpdate(){
-
-  }
-
   onSubmit(){
     axios.get(`http://localhost:8080/users/name/${this.state.username}`)
     .then(data => {
