@@ -56,7 +56,6 @@ class Chatroom extends Component {
       console.log('no text entered');
       return
     }
-
     this.props.onSendMessage({user: this.state.username, msg: this.state.input}, (err) => {
       if (err){
         return console.error(err)}
