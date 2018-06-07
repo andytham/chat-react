@@ -21,7 +21,7 @@ class Login extends Component {
 
   onSubmit(){
     let self = this;
-    axios.get(`http://localhost:8080/users/name/${this.state.username}`)
+    axios.get(`${process.env.API_SERVER}/users/name/${this.state.username}`)
     .then(data => {
       if(data.data.username == this.state.username && data.data.password == this.state.password){
         this.setState({loginSuccess: true})

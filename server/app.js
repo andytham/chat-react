@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 var server = require('http').createServer(app);
@@ -18,7 +19,6 @@ io.on('connection', function(socket){
     console.log('emitting history');
     io.emit('history', Chatroom.getChatHistory())
   })
-
   console.log('a user connected');
   socket.on('disconnect', function(){
     console.log('user disconnected');
@@ -34,6 +34,7 @@ io.on('connection', function(socket){
 
 app.use(express.static('build'));
 app.get('/', (req, res) => {
+
   res.sendFile(path.join(__dirname + "../index.html"))
 })
 

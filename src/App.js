@@ -10,6 +10,8 @@ import './components/Chatroom.css';
 import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
+
+
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -32,7 +34,6 @@ class App extends React.Component {
   }
 
   getHistory(){
-    console.log('getting history');
     this.state.client.history(this.updateChat)
   }
 

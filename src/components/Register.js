@@ -47,7 +47,7 @@ class Register extends Component {
       })
     } else {
       self = this;
-      axios.get(`http://localhost:8080/users/name/${this.state.username}`)
+      axios.get(`${process.env.API_SERVER}/users/name/${this.state.username}`)
       .then(data => {
         this.setState({
           error: `Username ${data.data.username} already exists.`
@@ -55,7 +55,7 @@ class Register extends Component {
       })
       .catch(err => {
 
-        axios.post('http://localhost:8080/users', {
+        axios.post(`${process.env.API_SERVER}/users`, {
           username: this.state.username,
           password: this.state.password
         })
