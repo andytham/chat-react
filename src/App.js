@@ -38,6 +38,19 @@ class App extends React.Component {
     this.onJoin();
   }
 
+  goTo(route) {
+    this.props.history.replace(`/${route}`)
+  }
+
+  login() {
+    this.props.auth.login();
+  }
+
+  logout() {
+    this.props.auth.logout();
+  }
+
+  
   getHistory(){
     this.state.client.history(this.updateChat)
   }

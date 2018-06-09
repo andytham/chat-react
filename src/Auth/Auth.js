@@ -1,10 +1,18 @@
 // src/Auth/Auth.js
 
 import history from '../history';
-
+import auth0 from 'auth0-js';
 // ...
 export default class Auth {
-  // ...
+  auth0 = new auth0.WebAuth({
+    domain: 'andytham.auth0.com',
+    clientID: 'v0MVweBrzRBmP74attU15PyCFM3HJQvY',
+    redirectUri: 'http://localhost:3000/callback',
+    audience: 'https://andytham.auth0.com/userinfo',
+    responseType: 'token id_token',
+    scope: 'openid'
+  })
+  
   constructor() {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -12,6 +20,9 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
+  login() {
+    this.auth0.authorize();
+  }
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
