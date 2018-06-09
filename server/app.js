@@ -45,6 +45,12 @@ app.get('/chat', (req, res) => {
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"))
 })
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"))
+})
+app.get('/callback', (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"))
+})
 app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"))
 })

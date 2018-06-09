@@ -12,8 +12,24 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 
 import Auth from './Auth/Auth.js';
+import AuthComponent from './AuthComponent';
 
-const auth = new Auth();
+
+// Listening for the authenticated event
+// lock.on("authenticated", function(authResult) {
+//   // Use the token in authResult to getUserInfo() and save it to localStorage
+//   lock.getUserInfo(authResult.accessToken, function(error, profile) {
+//     if (error) {
+//       // Handle error
+//       return;
+//     }
+
+//     document.getElementById('nick').textContent = profile.nickname;
+
+//     localStorage.setItem('accessToken', authResult.accessToken);
+//     localStorage.setItem('profile', JSON.stringify(profile));
+//   });
+// });
 
 
 
@@ -38,19 +54,19 @@ class App extends React.Component {
     this.onJoin();
   }
 
-  goTo(route) {
-    this.props.history.replace(`/${route}`)
-  }
+  // goTo(route) {
+  //   this.props.history.replace(`/${route}`)
+  // }
 
-  login() {
-    this.props.auth.login();
-  }
+  // login() {
+  //   this.props.auth.login();
+  // }
 
-  logout() {
-    this.props.auth.logout();
-  }
+  // logout() {
+  //   this.props.auth.logout();
+  // }
 
-  
+
   getHistory(){
     this.state.client.history(this.updateChat)
   }
@@ -102,7 +118,8 @@ class App extends React.Component {
   // }
 
   render(){
-    auth.login();
+    // auth.login();
+    // lock.show();
     const ChatroomComponent = () => {
       <Chatroom
         chatHistory={this.state.chatHistory}
@@ -114,7 +131,7 @@ class App extends React.Component {
     // console.log("APP STATE", this.state);
     return(
       <BrowserRouter>
-        <div className="App">
+        <div id="app" className="App">
           {/* <MuiThemeProvider>
             <Chatroom
               chatHistory={chatHistory}
@@ -125,6 +142,7 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" render={() => <Login onSuccess={this.onSuccess} />} />
+            <Route exact path="/login" render={() => <AuthComponent />} />
             <Route exact path="/chat" render={() =>  <Chatroom
               chatHistory={this.state.chatHistory}
               onSendMessage={
