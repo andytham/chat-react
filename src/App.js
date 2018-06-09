@@ -11,6 +11,11 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
 
+import Auth from './Auth/Auth.js';
+
+const auth = new Auth();
+
+
 
 class App extends React.Component {
   constructor(props){
@@ -84,6 +89,7 @@ class App extends React.Component {
   // }
 
   render(){
+    auth.login();
     const ChatroomComponent = () => {
       <Chatroom
         chatHistory={this.state.chatHistory}
