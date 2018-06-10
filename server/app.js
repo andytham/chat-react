@@ -11,10 +11,6 @@ const cr = require('./Chatroom.js');
 let Chatroom = cr()
 io.on('connection', function(socket){
 
-  // socket.on('join', function(callback){
-  //   return callback(Chatroom().getChatHistory());
-  // })
-
   socket.on('join', function(){
     console.log('emitting history');
     io.emit('history', Chatroom.getChatHistory())
@@ -29,7 +25,6 @@ io.on('connection', function(socket){
     Chatroom.addEntry(msg)
     io.emit('message', Chatroom.getChatHistory());
   });
-
 })
 
 app.use(express.static('build'));
