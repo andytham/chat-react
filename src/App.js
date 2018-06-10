@@ -13,26 +13,7 @@ import Profile from './components/Profile';
 
 import Auth from './Auth/Auth.js';
 import AuthComponent from './AuthComponent';
-
-
-// Listening for the authenticated event
-// lock.on("authenticated", function(authResult) {
-//   // Use the token in authResult to getUserInfo() and save it to localStorage
-//   lock.getUserInfo(authResult.accessToken, function(error, profile) {
-//     if (error) {
-//       // Handle error
-//       return;
-//     }
-
-//     document.getElementById('nick').textContent = profile.nickname;
-
-//     localStorage.setItem('accessToken', authResult.accessToken);
-//     localStorage.setItem('profile', JSON.stringify(profile));
-//   });
-// });
-
-
-
+import lock from './auth-config.js';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -52,6 +33,20 @@ class App extends React.Component {
   }
   componentDidMount(){
     this.onJoin();
+    lock.on("authenticated", function(authResult) {
+      // Use the token in authResult to getUserInfo() and save it to localStorage
+      lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+          // Handle error
+          return;
+        }
+    
+        // document.getElementById('nick').textContent = profile.nickname;
+    
+        localStorage.setItem('accessToken', authResult.accessToken);
+        localStorage.setItem('profile', JSON.stringify(profile));
+      });
+    });
   }
 
   // goTo(route) {
