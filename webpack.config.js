@@ -5,6 +5,7 @@ const Dotenv = require('dotenv-webpack');
 
 const config = {
   entry: [
+    'babel-polyfill',
     './src/index.js'
   ],
   output: {
