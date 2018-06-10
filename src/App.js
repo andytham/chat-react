@@ -115,6 +115,20 @@ class App extends React.Component {
   render(){
     // auth.login();
     // lock.show();
+    lock.on("authenticated", function(authResult) {
+			// Use the token in authResult to getUserInfo() and save it to localStorage
+			lock.getUserInfo(authResult.accessToken, function(error, profile) {
+				if (error) {
+					// Handle error
+					return;
+				}
+				console.log('authenticated as: ', profile.nickname)
+				// document.getElementById('nick').textContent = profile.nickname;
+		
+				localStorage.setItem('accessToken', authResult.accessToken);
+				localStorage.setItem('profile', JSON.stringify(profile));
+			});
+		});
     const ChatroomComponent = () => {
       <Chatroom
         chatHistory={this.state.chatHistory}

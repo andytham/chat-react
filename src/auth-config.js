@@ -6,7 +6,7 @@ var lock = new Auth0Lock('v0MVweBrzRBmP74attU15PyCFM3HJQvY', 'andytham.auth0.com
     configurationBaseUrl: 'https://cdn.auth0.com',
     responseType: 'token',
     params: {
-      scope: 'openid email'                // Learn about scopes: https://auth0.com/docs/scopes
+      scope: 'openid profile email'                // Learn about scopes: https://auth0.com/docs/scopes
     }
   }
 });
