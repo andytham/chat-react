@@ -2,13 +2,13 @@ import Auth0Lock from 'auth0-lock';
 import lock from './auth-config.js';
 
 import React from 'react';
-
+import { Redirect } from 'react-router-dom';
 class AuthComponent extends React.Component {
 	
 	componentDidMount(){
 		lock.show();
-
 	}
+
 
 	render(){
 		lock.on("authenticated", function(authResult) {
@@ -26,7 +26,7 @@ class AuthComponent extends React.Component {
 			});
 		});
 		return(
-			<div id="auth"></div>
+			<div id="blank"></div>
 		)
 	}
 }

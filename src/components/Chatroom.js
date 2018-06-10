@@ -8,6 +8,9 @@ import './Chatroom.css';
 
 import { Redirect } from 'react-router-dom';
 import Profile from './Profile';
+import lock from '../auth-config';
+
+
 
 class Chatroom extends Component {
   constructor(props){
@@ -27,11 +30,22 @@ class Chatroom extends Component {
   }
   componentWillReceiveProps(nextProps){
     // console.log(nextProps);
+    console.log('current props', this.props);
+    
+    console.log(nextProps, 'this is next props')
+    console.log(this.state);
+    console.log(this.context);
+    
+    
     if(this.props.username != nextProps.username){
+      console.log('yea');
+      
       this.setState({
         username: nextProps.username
       })
     } else if (this.props.username == ""){
+      console.log('no');
+      
       this.setState({
         loggedIn: false
       })
