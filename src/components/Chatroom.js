@@ -32,19 +32,6 @@ class Chatroom extends Component {
     this.updateChat = this.updateChat.bind(this)
   }
   componentWillReceiveProps(nextProps){
-    // if(this.props.username != nextProps.username){
-    //   console.log('yea');
-      
-    //   this.setState({
-    //     username: nextProps.username
-    //   })
-    // } else if (this.props.username == ""){
-    //   console.log('no');
-      
-    //   this.setState({
-    //     loggedIn: false
-    //   })
-    // }
   }
   componentDidMount(){
     let self = this
@@ -58,17 +45,15 @@ class Chatroom extends Component {
         localStorage.setItem('profile', JSON.stringify(profile));
         self.setState({
           username: profile.nickname
-        });
+        },
+        self.onJoin(profile.nickname));
       });
     });
     lock.on("authorization_error", function(authResult){
-      console.log(authResult);
-      console.log('not signed in');
       self.setState({
         loggedIn: false
       })
     })
-    this.onJoin();
   }
 
   componentDidUpdate(){
@@ -91,8 +76,9 @@ class Chatroom extends Component {
     })
   }
 
-  onJoin(){
-    this.state.client.join();
+  onJoin(user){
+    console.log('chatroomjs', user);
+    this.state.client.join(user);
     this.getHistory();
   }
 

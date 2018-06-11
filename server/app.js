@@ -11,11 +11,16 @@ const cr = require('./Chatroom.js');
 let Chatroom = cr()
 io.on('connection', function(socket){
 
-  socket.on('join', function(){
-    console.log('emitting history');
+  //when user joins the server
+  socket.on('join', function(user){
     io.emit('history', Chatroom.getChatHistory())
+    console.log(user, "has joined");
+    Chatroom.addEntry({user: "server", msg: `${user} has joined the server`})
+    io.emit('message', Chatroom.getChatHistory())
   })
-  console.log('a user connected');
+
+
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
@@ -25,6 +30,8 @@ io.on('connection', function(socket){
     Chatroom.addEntry(msg)
     io.emit('message', Chatroom.getChatHistory());
   });
+
+
 })
 
 app.use(express.static('build'));

@@ -9,12 +9,15 @@ export default function() {
       updateChat(msg)
     })
   }
+
   function message(msg, cb){
     socket.emit("message", msg)
   }
 
-  function join(){
-    socket.emit("join", "hmm")
+  function join(user){
+    //when user joins the server
+    console.log(user, 'from socketjs');
+    socket.emit("join", user)
   }
 
   function history(updateChat){
