@@ -25,9 +25,9 @@ class Profile extends Component {
     })
   }
   componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    if(this.props.username != nextProps.username){
-    }
+    // console.log(nextProps);
+    // if(this.props.username != nextProps.username){
+    // }
   }
 
   onSave(){

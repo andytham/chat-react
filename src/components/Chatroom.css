@@ -17,6 +17,9 @@ li {
   color: rgb(191, 37, 33);
 }
 
+.green{
+  color: rgb(150, 192, 95);
+}
 .chat-window{
   margin: 0 auto;
   width: 460px;

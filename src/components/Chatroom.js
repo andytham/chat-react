@@ -104,8 +104,22 @@ class Chatroom extends Component {
   renderChat(){
     let count = 0;
     let history = (this.state.chatHistory.map(entry => {
-      return (<li className="entry" key={count++}>
-        {this.state.username == entry.user ? <span className="red">{entry.user}</span>:<span className="blue">{entry.user}</span>}: {entry.msg} </li>)
+      if(entry.user == "server"){
+        return (
+          <li className="entry" key={count++}>
+            <span className="green">{entry.user}</span>: {entry.msg}
+          </li>
+        )
+      } else
+      return (
+        <li className="entry" key={count++}>
+          {this.state.username == entry.user 
+            ? <span className="red">{entry.user}</span>
+            :<span className="blue">{entry.user}</span>
+          }
+          : {entry.msg} 
+        </li>
+      )
     }))
     return history
   }

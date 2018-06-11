@@ -8,21 +8,35 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 const cr = require('./Chatroom.js');
-let Chatroom = cr()
+let Chatroom = cr();
+let usersList = {};
 io.on('connection', function(socket){
 
+
+  
   //when user joins the server
   socket.on('join', function(user){
+
     io.emit('history', Chatroom.getChatHistory())
-    console.log(user, "has joined");
-    Chatroom.addEntry({user: "server", msg: `${user} has joined the server`})
-    io.emit('message', Chatroom.getChatHistory())
+
+    if(user){
+      console.log(user, "has joined");
+      Chatroom.addEntry({user: "server", msg: `${user} has joined the server`})
+      io.emit('message', Chatroom.getChatHistory())
+      usersList[socket.id] = user
+    }
+
+
   })
 
 
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    if(usersList[socket.id]){
+      console.log(usersList[socket.id], 'user disconnected');
+      Chatroom.addEntry({user: "server", msg: `${usersList[socket.id]} has disconnected.`})
+      io.emit('message', Chatroom.getChatHistory())
+    }
   });
 
   socket.on('message', function(msg){
