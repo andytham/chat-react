@@ -22,7 +22,7 @@ li {
   width: 460px;
   padding: 9px;
   border: 3px #FE6B8B solid;
-  height: 95%;
+  height: 50%;
   border-radius: 3px;
   display: flex;
   flex-direction: column;

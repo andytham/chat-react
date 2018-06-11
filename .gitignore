@@ -3,4 +3,4 @@ build/
 node_modules/
 package-lock.json
 .env
-chatKeyPair.pem
+ChatKey.pem

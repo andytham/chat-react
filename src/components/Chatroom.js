@@ -9,7 +9,7 @@ import './Chatroom.css';
 import { Redirect } from 'react-router-dom';
 import Profile from './Profile';
 import lock from '../auth-config';
-
+import socket from '../socket.js';
 
 
 class Chatroom extends Component {
@@ -17,48 +17,85 @@ class Chatroom extends Component {
     super(props);
     const { chatHistory } = props
     this.state = {
-       chatHistory,
-       input: "",
-       username: "",
-       loggedIn: true
+      client: socket(),
+      chatHistory,
+      input: "",
+      username: "",
+      loggedIn: true
     }
     this.chat = React.createRef();
     this.onInput = this.onInput.bind(this)
     this.onSendMessage = this.onSendMessage.bind(this)
     this.renderChat = this.renderChat.bind(this)
-    this.scrollChatToBottom = this.scrollChatToBottom.bind(this)
+    this.onJoin = this.onJoin.bind(this)
+    this.getHistory = this.getHistory.bind(this)
+    this.updateChat = this.updateChat.bind(this)
   }
   componentWillReceiveProps(nextProps){
-    // console.log(nextProps);
-    console.log('current props', this.props);
-    
-    console.log(nextProps, 'this is next props')
-    console.log(this.state);
-    console.log(this.context);
-    
-    
-    if(this.props.username != nextProps.username){
-      console.log('yea');
+    // if(this.props.username != nextProps.username){
+    //   console.log('yea');
       
-      this.setState({
-        username: nextProps.username
-      })
-    } else if (this.props.username == ""){
-      console.log('no');
+    //   this.setState({
+    //     username: nextProps.username
+    //   })
+    // } else if (this.props.username == ""){
+    //   console.log('no');
       
-      this.setState({
-        loggedIn: false
-      })
-    }
+    //   this.setState({
+    //     loggedIn: false
+    //   })
+    // }
   }
   componentDidMount(){
+    let self = this
+    lock.on("authenticated", function(authResult) {
+      lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+          // Handle error
+          return;
+        }
+        localStorage.setItem('accessToken', authResult.accessToken);
+        localStorage.setItem('profile', JSON.stringify(profile));
+        self.setState({
+          username: profile.nickname
+        });
+      });
+    });
+    lock.on("authorization_error", function(authResult){
+      console.log(authResult);
+      console.log('not signed in');
+      self.setState({
+        loggedIn: false
+      })
+    })
+    this.onJoin();
   }
 
   componentDidUpdate(){
+    //receive response back from socket
+    this.state.client.receive(this.updateChat)
+
+    //scroll chat to the bottom
     if(this.state.username){
       this.chat.current.scrollTo(0, this.chat.current.scrollHeight)
     }
   }
+
+  getHistory(){
+    this.state.client.history(this.updateChat)
+  }
+
+  updateChat(entry){
+    this.setState({
+      chatHistory: entry
+    })
+  }
+
+  onJoin(){
+    this.state.client.join();
+    this.getHistory();
+  }
+
   onInput(e) {
     this.setState({
       input: e.target.value
@@ -70,25 +107,21 @@ class Chatroom extends Component {
       console.log('no text entered');
       return
     }
-    this.props.onSendMessage({user: this.state.username, msg: this.state.input}, (err) => {
-      if (err){
-        return console.error(err)}
-      return this.setState({ input: '' })
+    this.state.client.message({
+      user: this.state.username, msg: this.state.input
+    }, (err) => {
+      return console.log(err);
     })
     this.setState({ input: ''})
-    this.scrollChatToBottom();
   }
+
   renderChat(){
     let count = 0;
-    let history = (this.props.chatHistory.map(entry => {
+    let history = (this.state.chatHistory.map(entry => {
       return (<li className="entry" key={count++}>
         {this.state.username == entry.user ? <span className="red">{entry.user}</span>:<span className="blue">{entry.user}</span>}: {entry.msg} </li>)
     }))
     return history
-  }
-
-  scrollChatToBottom() {
-
   }
 
   render() {

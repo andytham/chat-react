@@ -2,7 +2,8 @@ import Auth0Lock from 'auth0-lock';
 var lock = new Auth0Lock('v0MVweBrzRBmP74attU15PyCFM3HJQvY', 'andytham.auth0.com', {
   container: 'auth',
   auth: {
-    redirectUrl: 'http://localhost:3000/chat',    // If not specified, defaults to the current page 
+    // redirectUrl: 'http://ec2-18-188-70-45.us-east-2.compute.amazonaws.com:3000/chat',    // If not specified, defaults to the current page 
+    redirectUrl: 'http://localhost:3000/chat',
     configurationBaseUrl: 'https://cdn.auth0.com',
     responseType: 'token',
     params: {
@@ -10,7 +11,7 @@ var lock = new Auth0Lock('v0MVweBrzRBmP74attU15PyCFM3HJQvY', 'andytham.auth0.com
       // scope: 'openid email' //profile (consent) needed for localhost
 
     },
-    sso: false
+    sso: false //stops single sign on
   }
 });
 // Listening for the authenticated event
