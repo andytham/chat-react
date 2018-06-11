@@ -47,9 +47,9 @@ const config = {
     template: "./index.html"
   }),
   new Dotenv({
-            path: './.env', // Path to .env file (this is the default)
-            safe: false // load .env.example (defaults to "false" which does not use dotenv-safe)
-          }) //thanks to this issue in stack overflow: https://stackoverflow.com/questions/44934340/using-dotenv-module-with-react
+    path: path.resolve(__dirname, '.env'), // Path to .env file (this is the default)
+    safe: false // load .env.example (defaults to "false" which does not use dotenv-safe)
+  }) //thanks to this issue in stack overflow: https://stackoverflow.com/questions/44934340/using-dotenv-module-with-react
 
   ],
   node: { //let's you use file system

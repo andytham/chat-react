@@ -6,9 +6,6 @@ ul{
 }
 
 
-li {
-}
-
 .blue{
   color: rgb(1, 151, 208);
 }
@@ -32,9 +29,7 @@ li {
   justify-content: flex-end;
 }
 
-.entry{
 
-}
 .chat-history{
   height: 100%;
   overflow: auto;
