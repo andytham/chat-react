@@ -13,7 +13,7 @@ let usersList = {};
 io.on('connection', function(socket){
 
 
-  
+
   //when user joins the server
   socket.on('join', function(user){
 
@@ -21,7 +21,7 @@ io.on('connection', function(socket){
 
     if(user){
       console.log(user, "has joined");
-      Chatroom.addEntry({user: "server", msg: `${user} has joined the server`})
+      Chatroom.addEntry({usr: "server", msg: `${user} has joined the server`})
       io.emit('message', Chatroom.getChatHistory())
       usersList[socket.id] = user
     }
@@ -34,7 +34,7 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     if(usersList[socket.id]){
       console.log(usersList[socket.id], 'user disconnected');
-      Chatroom.addEntry({user: "server", msg: `${usersList[socket.id]} has disconnected.`})
+      Chatroom.addEntry({usr: "server", msg: `${usersList[socket.id]} has disconnected.`})
       io.emit('message', Chatroom.getChatHistory())
     }
   });

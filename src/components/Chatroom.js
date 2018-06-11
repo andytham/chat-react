@@ -94,7 +94,7 @@ class Chatroom extends Component {
       return
     }
     this.state.client.message({
-      user: this.state.username, msg: this.state.input
+      usr: this.state.username, msg: this.state.input
     }, (err) => {
       return console.log(err);
     })
@@ -104,20 +104,20 @@ class Chatroom extends Component {
   renderChat(){
     let count = 0;
     let history = (this.state.chatHistory.map(entry => {
-      if(entry.user == "server"){
+      if(entry.usr == "server"){
         return (
           <li className="entry" key={count++}>
-            <span className="green">{entry.user}</span>: {entry.msg}
+            <span className="green">{entry.usr}</span>: {entry.msg}
           </li>
         )
       } else
       return (
         <li className="entry" key={count++}>
-          {this.state.username == entry.user 
-            ? <span className="red">{entry.user}</span>
-            :<span className="blue">{entry.user}</span>
+          {this.state.username == entry.usr
+            ? <span className="red">{entry.usr}</span>
+            :<span className="blue">{entry.usr}</span>
           }
-          : {entry.msg} 
+          : {entry.msg}
         </li>
       )
     }))

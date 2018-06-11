@@ -1,5 +1,14 @@
+const axios = require('axios');
+const url = require("../server-var.js");
+
+
 module.exports = function () {
-  let chatHistory = [{user: 'server', msg: 'welcome to the chatroom!'}]
+  let chatHistory = [{usr: 'server', msg: 'welcome to the chatroom!'}]
+  axios.get(`${url.CHAT_HISTORY_API}`).then( data => {
+    chatHistory = data.data;
+  }).catch(err => {
+    console.log("somethig is not going right");
+  })
 
   // function broadcastMessage(message) {
   //   members.forEach(m => m.emit('message', message))
@@ -7,6 +16,18 @@ module.exports = function () {
 
   function addEntry(entry) {
     chatHistory = chatHistory.concat(entry)
+    console.log('this is entry', entry);
+    axios.post(`${url.CHAT_HISTORY_API}`,
+    {
+      usr: entry.usr,
+      msg: entry.msg
+    })
+    .then(res => {
+      // console.log(res);
+    })
+    .catch(err => {
+      // console.log(err);
+    })
     // console.log("added to chat history: ", chatHistory);
   }
 

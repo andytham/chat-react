@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios'
 import './Profile.css';
 import { Redirect } from 'react-router-dom';
-import url from "../server-var.js";
+import url from "../../server-var.js";
 
 class Profile extends Component {
   constructor(props){
@@ -114,7 +114,7 @@ class Profile extends Component {
           onKeyPress={e => (e.key === 'Enter' ? this.onSave() : null)}
         />
 
-        {this.state.editing 
+        {this.state.editing
           ?
           <div>
             <Button onClick={this.onSave}>Save</Button>
@@ -125,7 +125,7 @@ class Profile extends Component {
           <div>
             <Button href="/">Logout</Button>
               <br/>
-            <Button onClick={this.onEdit}>Edit</Button> 
+            <Button onClick={this.onEdit}>Edit</Button>
           </div>
         }
       </div>
