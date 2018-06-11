@@ -32,19 +32,6 @@ class Chatroom extends Component {
     this.updateChat = this.updateChat.bind(this)
   }
   componentWillReceiveProps(nextProps){
-    // if(this.props.username != nextProps.username){
-    //   console.log('yea');
-      
-    //   this.setState({
-    //     username: nextProps.username
-    //   })
-    // } else if (this.props.username == ""){
-    //   console.log('no');
-      
-    //   this.setState({
-    //     loggedIn: false
-    //   })
-    // }
   }
   componentDidMount(){
     let self = this
@@ -58,17 +45,15 @@ class Chatroom extends Component {
         localStorage.setItem('profile', JSON.stringify(profile));
         self.setState({
           username: profile.nickname
-        });
+        },
+        self.onJoin(profile.nickname));
       });
     });
     lock.on("authorization_error", function(authResult){
-      console.log(authResult);
-      console.log('not signed in');
       self.setState({
         loggedIn: false
       })
     })
-    this.onJoin();
   }
 
   componentDidUpdate(){
@@ -91,8 +76,9 @@ class Chatroom extends Component {
     })
   }
 
-  onJoin(){
-    this.state.client.join();
+  onJoin(user){
+    console.log('chatroomjs', user);
+    this.state.client.join(user);
     this.getHistory();
   }
 
@@ -118,8 +104,22 @@ class Chatroom extends Component {
   renderChat(){
     let count = 0;
     let history = (this.state.chatHistory.map(entry => {
-      return (<li className="entry" key={count++}>
-        {this.state.username == entry.user ? <span className="red">{entry.user}</span>:<span className="blue">{entry.user}</span>}: {entry.msg} </li>)
+      if(entry.user == "server"){
+        return (
+          <li className="entry" key={count++}>
+            <span className="green">{entry.user}</span>: {entry.msg}
+          </li>
+        )
+      } else
+      return (
+        <li className="entry" key={count++}>
+          {this.state.username == entry.user 
+            ? <span className="red">{entry.user}</span>
+            :<span className="blue">{entry.user}</span>
+          }
+          : {entry.msg} 
+        </li>
+      )
     }))
     return history
   }

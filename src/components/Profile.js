@@ -4,14 +4,16 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios'
 import './Profile.css';
 import { Redirect } from 'react-router-dom';
+import url from "../server-var.js";
+
 class Profile extends Component {
   constructor(props){
     super(props);
     this.state = {
       editing: false,
-      oldName: "",
       input: "",
       redirect: false,
+      bio: ""
     }
     this.onSave = this.onSave.bind(this)
     this.onDelete = this.onDelete.bind(this)
@@ -19,15 +21,36 @@ class Profile extends Component {
     this.nameInput = this.nameInput.bind(this)
   }
   componentDidMount(){
-    this.setState({
-      input: this.props.username,
-      oldName: this.props.username
+    try {
+      axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
+      .then(data => {
+        console.log('in try catch, this is data', data.data);
+        this.setState({
+          bio: data.data.bio,
+          input: data.data.bio
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    } catch (error) {
+      axios.post(`${url.PROFILES_API}`,
+    {
+      nickname: this.props.username,
+      bio: ""
+    }).then( res => {
+      console.log(res);
     })
+    .catch(err => {
+      console.log(err);
+    })
+    }
+
   }
   componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    if(this.props.username != nextProps.username){
-    }
+    // console.log(nextProps);
+    // if(this.props.username != nextProps.username){
+    // }
   }
 
   onSave(){
@@ -35,29 +58,33 @@ class Profile extends Component {
       editing: false,
     })
     self = this;
-    axios.patch(`http://localhost:8080/users/name/${this.state.oldName}`, {
-      username: this.state.input
+    axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
+      bio: this.state.input
     })
     .then(()=>{
       console.log('patch success');
       self.setState({
-        oldName: this.state.input
+        bio: this.state.input
       })
     })
     .catch(err=>{console.log(err);})
   }
   onDelete(){
-    console.log('delte attempt');
-    let self = this;
-    axios.delete(`http://localhost:8080/users/name/${this.state.oldName}`)
-    .then(() => {
+    this.setState({
+      editing: false,
+    })
+    self = this;
+    axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
+      bio: ""
+    })
+    .then(()=>{
+      console.log('patch success');
       self.setState({
-        redirect: true
+        input: "",
+        bio: ""
       })
     })
-    .catch(err=>{
-      console.log(err);
-    })
+    .catch(err=>{console.log(err);})
   }
   onEdit(){
     this.setState({
@@ -69,29 +96,38 @@ class Profile extends Component {
       input: e.target.value
     })
   }
+
   render() {
     if(this.state.redirect){
       return <Redirect to="/"/>
     }
     return (
       <div className="profile">
+        <div className="profile-name">
+          {this.props.username}
+        </div>
         <TextField
-          className="profile-name"
+          className="profile-bio"
           value={this.state.input}
           onChange={this.nameInput}
           disabled={!this.state.editing}
+          onKeyPress={e => (e.key === 'Enter' ? this.onSave() : null)}
         />
 
-        {this.state.editing ?
+        {this.state.editing 
+          ?
           <div>
             <Button onClick={this.onSave}>Save</Button>
             <br/>
             <Button onClick={this.onDelete}>Delete</Button>
           </div>
           :
-          <Button onClick={this.onEdit}>Edit</Button> }
-
-        <Button href="/">Logout</Button>
+          <div>
+            <Button href="/">Logout</Button>
+              <br/>
+            <Button onClick={this.onEdit}>Edit</Button> 
+          </div>
+        }
       </div>
     );
   }
