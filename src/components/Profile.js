@@ -24,26 +24,31 @@ class Profile extends Component {
     try {
       axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
       .then(data => {
-        console.log('in try catch, this is data', data.data);
+        console.log("THIS IS DATA", data);
+        if(data.data.present == false){
+          axios.post(`${url.PROFILES_API}`,
+        {
+          nickname: this.props.username,
+          bio: ""
+        }).then( res => {
+          console.log('created new entry');
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      } else {
         this.setState({
           bio: data.data.bio,
           input: data.data.bio
         })
+      }
       })
       .catch(err => {
         console.log(err);
       })
     } catch (error) {
-      axios.post(`${url.PROFILES_API}`,
-    {
-      nickname: this.props.username,
-      bio: ""
-    }).then( res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+
     }
 
   }
