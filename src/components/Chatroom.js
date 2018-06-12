@@ -8,6 +8,7 @@ import './Chatroom.css';
 
 import { Redirect } from 'react-router-dom';
 import Profile from './Profile';
+import OthersProfile from './OthersProfile';
 import lock from '../auth-config';
 import socket from '../socket.js';
 
@@ -21,7 +22,8 @@ class Chatroom extends Component {
       chatHistory,
       input: "",
       username: "",
-      loggedIn: true
+      loggedIn: true,
+      showProfile: false
     }
     this.chat = React.createRef();
     this.onInput = this.onInput.bind(this)
@@ -30,6 +32,7 @@ class Chatroom extends Component {
     this.onJoin = this.onJoin.bind(this)
     this.getHistory = this.getHistory.bind(this)
     this.updateChat = this.updateChat.bind(this)
+    this.manageProfile = this.manageProfile.bind(this)
   }
   componentWillReceiveProps(nextProps){
   }
@@ -88,6 +91,26 @@ class Chatroom extends Component {
     })
   }
 
+  manageProfile(getName){
+    if(this.state.showProfile == true){
+      if (this.state.profileName == getName){
+        this.setState({
+          showProfile: false,
+          profileName: ""
+        })
+      } else {
+        this.setState({
+          profileName: getName
+        })
+      }
+    } else {
+      this.setState({
+        showProfile: true,
+        profileName: getName
+      })
+    }
+  }
+
   onSendMessage(){
     if (!this.state.input) {
       console.log('no text entered');
@@ -115,7 +138,7 @@ class Chatroom extends Component {
         <li className="entry" key={count++}>
           {this.state.username == entry.usr
             ? <span className="red">{entry.usr}</span>
-            :<span className="blue">{entry.usr}</span>
+            :<span className="blue" onClick={() => this.manageProfile(entry.usr)}>{entry.usr}</span>
           }
           : {entry.msg}
         </li>
@@ -141,7 +164,10 @@ class Chatroom extends Component {
     if (this.state.loggedIn && this.state.username) {
       return(
         <div className="chat-window">
-          <Profile  username={this.state.username}/>
+        <div className="profiles">
+         <Profile  username={this.state.username}/>
+         {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : "profile goes here"}
+        </div>  
           <div className="chat-title"></div>
           <ul className="chat-history" ref={this.chat}>
               {this.state.chatHistory ? this.renderChat() : "loading"}

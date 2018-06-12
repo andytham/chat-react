@@ -24,9 +24,16 @@ class Profile extends Component {
     try {
       axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
       .then(data => {
-        console.log("THIS IS DATA", data);
-        if(data.data.present == false){
-          axios.post(`${url.PROFILES_API}`,
+        
+        this.setState({
+          bio: data.data.bio,
+          input: data.data.bio
+        })
+      
+      })
+      .catch(err => {
+        console.log(err);
+        axios.post(`${url.PROFILES_API}`,
         {
           nickname: this.props.username,
           bio: ""
@@ -37,15 +44,6 @@ class Profile extends Component {
         .catch(err => {
           console.log(err);
         })
-      } else {
-        this.setState({
-          bio: data.data.bio,
-          input: data.data.bio
-        })
-      }
-      })
-      .catch(err => {
-        console.log(err);
       })
     } catch (error) {
 
