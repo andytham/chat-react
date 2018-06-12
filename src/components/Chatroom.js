@@ -46,10 +46,14 @@ class Chatroom extends Component {
         }
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
-        self.setState({
-          username: profile.nickname
-        },
-        self.onJoin(profile.nickname));
+
+        console.log('this is probably running too many times');
+        // if(this.state.uername != profile.nickname){
+          self.setState({
+            username: profile.nickname
+          },
+          self.onJoin(profile.nickname));
+        // }
       });
     });
     lock.on("authorization_error", function(authResult){
@@ -58,15 +62,29 @@ class Chatroom extends Component {
       })
     })
   }
+  // componentWillReceiveProps(nextProps){
+  //   console.log(nextProps);
+  // }
 
-  componentDidUpdate(){
-    //receive response back from socket
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log("state", this.state);
+  //   console.log("nextstate",nextState);
+  //   if(this.state.input != nextState.input || this.state.username != nextState.username){
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState){
+
     this.state.client.receive(this.updateChat)
-
     //scroll chat to the bottom
+
     if(this.state.username){
       this.chat.current.scrollTo(0, this.chat.current.scrollHeight)
     }
+  
   }
 
   getHistory(){
@@ -74,9 +92,11 @@ class Chatroom extends Component {
   }
 
   updateChat(entry){
-    this.setState({
-      chatHistory: entry
-    })
+    if(this.state.chatHistory != entry){
+      this.setState({
+        chatHistory: entry
+      })
+    }
   }
 
   onJoin(user){
@@ -148,26 +168,12 @@ class Chatroom extends Component {
   }
 
   render() {
-    // console.log('chatroom render');
-    // console.log('current user', this.props.username);
-    // const poop = this.props.username
-    // console.log(poop);
-    // this.setState({
-    //   username: poop
-    // })
-    // console.log(this.state.username, 'state ussername');
-    // if(!this.state.username){
-    //   this.setState({
-    //     username: this.props.username
-    //   })
-    // }
+    // console.log(this.state);
+    // console.log('why is this so slow');
     if (this.state.loggedIn && this.state.username) {
       return(
-        <div className="chat-window">
-        <div className="profiles">
-         <Profile  username={this.state.username}/>
-         {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : "profile goes here"}
-        </div>  
+        <div className="chatroom">
+        <div className="chat-window chat-width"> 
           <div className="chat-title"></div>
           <ul className="chat-history" ref={this.chat}>
               {this.state.chatHistory ? this.renderChat() : "loading"}
@@ -188,9 +194,19 @@ class Chatroom extends Component {
             </Button>
           </div>
         </div>
+                <div className="profiles">
+                <Profile  username={this.state.username}/>
+                {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : "profile goes here"}
+               </div> 
+               </div>
       )
     } else if (this.state.loggedIn){
-      return (<div>Redirecting...</div>)
+      let myStorage = window.localStorage;
+      console.log(JSON.parse(myStorage.profile).nickname);
+      this.setState({
+        username: JSON.parse(myStorage.profile).nickname
+      })
+      return (<div className="redirect">Redirecting...</div>)
     } else { return <Redirect to="/" /> }
 
   }

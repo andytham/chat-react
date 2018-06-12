@@ -4,7 +4,9 @@ ul{
   list-style-type: none;
   height: 100%;
 }
-
+.redirect{
+  text-align: center;
+}
 
 .blue{
   color: rgb(1, 151, 208);
@@ -19,16 +21,19 @@ ul{
 }
 .chat-window{
   margin: 0 auto;
-  width: 460px;
+
   padding: 9px;
   border: 3px #FE6B8B solid;
-  height: 50%;
+  height: 450px;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
+.chat-width{
+  width: 360px;
+}
 
 .chat-history{
   height: 100%;
