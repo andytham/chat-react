@@ -73,9 +73,6 @@ class Profile extends Component {
     .catch(err=>{console.log(err);})
   }
   onDelete(){
-    this.setState({
-      editing: false,
-    })
     self = this;
     axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
       bio: ""
@@ -86,8 +83,16 @@ class Profile extends Component {
         input: "",
         bio: ""
       })
+      self.onSave();
     })
-    .catch(err=>{console.log(err);})
+    .catch(err=>{
+      console.log(err);
+      self.setState({
+        input: "",
+        bio: ""
+      })
+      self.onSave();
+    })
   }
   onEdit(){
     this.setState({
@@ -105,10 +110,12 @@ class Profile extends Component {
       return <Redirect to="/"/>
     }
     return (
-      <div className="profile">
+      <div className="profile chat-width">
         <div className="profile-name">
-          {this.props.username}
+          <span className="status">Logged in as: </span>{this.props.username}
         </div>
+        <div className="status-wrapper">
+          <span className="status"> Status: </span> 
         <TextField
           className="profile-bio"
           value={this.state.input}
@@ -116,19 +123,20 @@ class Profile extends Component {
           disabled={!this.state.editing}
           onKeyPress={e => (e.key === 'Enter' ? this.onSave() : null)}
         />
+        </div>
 
         {this.state.editing
           ?
-          <div>
-            <Button onClick={this.onSave}>Save</Button>
+          <div className="profile-button">
+            <Button className="profile-button" onClick={this.onSave}>Save</Button>
             <br/>
-            <Button onClick={this.onDelete}>Delete</Button>
+            <Button className="profile-button" onClick={this.onDelete}>Delete</Button>
           </div>
           :
-          <div>
-            <Button href="/">Logout</Button>
+          <div className="profile-button">
+            <Button className="profile-button" onClick={this.onEdit}>Edit</Button>
               <br/>
-            <Button onClick={this.onEdit}>Edit</Button>
+            <Button className="profile-button" href="/">Logout</Button>
           </div>
         }
       </div>

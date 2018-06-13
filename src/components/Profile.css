@@ -1,14 +1,60 @@
+.profiles{
+  margin: 5px auto;
+
+}
 .profile{
-  position: absolute;
-  float: left;
+  /* position: absolute;
+  float: left; */
   top: 0;
   left: 0;
   margin: 5px;
   display: flex;
   flex-direction: column;
+  padding: 9px;
+  border: 3px #1282c5 solid;
+  border-radius: 3px;
 }
 
-.profile-name{
-  width:100px;
+
+
+.profile-bio{
+  margin: 0 auto;
+  display: block;
+  /* color: red; */
+  position: relative;
+}
+.status-wrapper{
+  margin: 0 auto;
+}
+
+.other-profile{
+  /* position: absolute;
+  float: left; */
+  top: 0;
+  left: 0;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 9px;
+  border: 3px #30aa22 solid;
+  border-radius: 3px;
   text-align: center;
+}
+.status{
+  font-size: 13px;
+  text-align: center;
+  color: grey;
+  font-size: 13px;
+}
+.profile-name{
+  /* width:100px; */
+  text-align: center;
+}
+
+.status{
+
+}
+
+.profile-button{
+  margin: 0 auto;
 }

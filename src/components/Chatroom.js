@@ -146,11 +146,12 @@ class Chatroom extends Component {
 
   renderChat(){
     let count = 0;
+    console.log('rendering chat');
     let history = (this.state.chatHistory.map(entry => {
       if(entry.usr == "server"){
         return (
           <li className="entry" key={count++}>
-            <span className="green">{entry.usr}</span>: {entry.msg}
+            <span className="green">{entry.usr}</span>: <span className="grey" >{entry.msg} </span>
           </li>
         )
       } else
@@ -173,32 +174,32 @@ class Chatroom extends Component {
     if (this.state.loggedIn && this.state.username) {
       return(
         <div className="chatroom">
-        <div className="chat-window chat-width"> 
-          <div className="chat-title"></div>
-          <ul className="chat-history" ref={this.chat}>
-              {this.state.chatHistory ? this.renderChat() : "loading"}
-          </ul>
-          <div className="input-wrapper">
-            <TextField
-              className="chat-input"
-              autoFocus={true}
-              placeholder="Enter a message."
-              rows={4}
-              rowsMax={4}
-              onChange={this.onInput}
-              value={this.state.input}
-              onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
-            />
-            <Button className="enter-msg" onClick={this.onSendMessage}>
-              Enter
-            </Button>
+          <div className="chat-window chat-width"> 
+            <div className="chat-title"></div>
+            <ul className="chat-history" ref={this.chat}>
+                {this.state.chatHistory ? this.renderChat() : "loading..."}
+            </ul>
+            <div className="input-wrapper">
+              <TextField
+                className="chat-input"
+                autoFocus={true}
+                placeholder="Enter a message."
+                rows={4}
+                rowsMax={4}
+                onChange={this.onInput}
+                value={this.state.input}
+                onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
+              />
+              <Button className="enter-msg" onClick={this.onSendMessage}>
+                Enter
+              </Button>
+            </div>
           </div>
+          <div className="profiles">
+            <Profile  username={this.state.username}/>
+              {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : ""}
+          </div> 
         </div>
-                <div className="profiles">
-                <Profile  username={this.state.username}/>
-                {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : "profile goes here"}
-               </div> 
-               </div>
       )
     } else if (this.state.loggedIn){
       let myStorage = window.localStorage;

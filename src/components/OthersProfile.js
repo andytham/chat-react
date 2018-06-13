@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import url from '../../server-var';
+import './Profile.css';
 
 class OthersProfile extends Component {
 	constructor(props) {
@@ -34,12 +35,15 @@ class OthersProfile extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="other-profile">
+				{this.state.username}
 				<div>
-					{this.state.username}
-				</div>	
-				<div>	
-					{this.state.bio}
+					<div>
+						{this.state.username}'s profile
+					</div>	
+					<div className="status">	
+						{this.state.bio ? this.state.bio : "no status"}
+					</div>
 				</div>
 			</div>
 		);
