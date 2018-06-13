@@ -22,7 +22,7 @@ class Profile extends Component {
   }
   componentDidMount(){
     try {
-      axios.get(`${url.PROFILES_API}/user-profiles/name/${this.props.username}`)
+      axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
       .then(data => {
         
         this.setState({
@@ -61,7 +61,7 @@ class Profile extends Component {
       editing: false,
     })
     self = this;
-    axios.patch(`${url.PROFILES_API}/user-profiles/name/${this.props.username}`, {
+    axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
       bio: this.state.input
     })
     .then(()=>{
@@ -74,7 +74,7 @@ class Profile extends Component {
   }
   onDelete(){
     self = this;
-    axios.patch(`${url.PROFILES_API}/user-profiles/name/${this.props.username}`, {
+    axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
       bio: ""
     })
     .then(()=>{
