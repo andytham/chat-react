@@ -16,7 +16,7 @@ class OthersProfile extends Component {
 		let self = this;
 		console.log(this.props);
 		if(this.props){
-			axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
+			axios.get(`${url.PROFILES_API}/user-profiles/name/${this.props.username}`)
 			.then(data => {
 				self.setState({
 					username: data.data.nickname,
@@ -36,7 +36,6 @@ class OthersProfile extends Component {
 	render() {
 		return (
 			<div className="other-profile">
-				{this.state.username}
 				<div>
 					<div>
 						{this.state.username}'s profile

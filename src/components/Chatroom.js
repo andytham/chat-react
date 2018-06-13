@@ -33,6 +33,8 @@ class Chatroom extends Component {
     this.getHistory = this.getHistory.bind(this)
     this.updateChat = this.updateChat.bind(this)
     this.manageProfile = this.manageProfile.bind(this)
+    this.stringifyTime = this.stringifyTime.bind(this)
+    this.addZero = this.addZero.bind(this)
   }
   componentWillReceiveProps(nextProps){
   }
@@ -89,10 +91,10 @@ class Chatroom extends Component {
     this.state.client.history(this.updateChat)
   }
 
-  updateChat(entry){
-    if(this.state.chatHistory != entry){
+  updateChat(history){
+    if(this.state.chatHistory != history){
       this.setState({
-        chatHistory: entry
+        chatHistory: history
       })
     }
   }
@@ -134,21 +136,46 @@ class Chatroom extends Component {
       console.log('no text entered');
       return
     }
+    let time = new Date();
+    let h = time.getHours();
+    let m = time.getMinutes();
+    let s = time.getSeconds();
+    let currentTime = this.stringifyTime(h, m, s);
     this.state.client.message({
-      usr: this.state.username, msg: this.state.input
+      usr: this.state.username,
+      msg: this.state.input, 
+      time: currentTime
     }, (err) => {
       return console.log(err);
     })
     this.setState({ input: ''})
   }
 
+  stringifyTime(hours, minutes, seconds){
+    let h = this.addZero(hours);;
+    let m = this.addZero(minutes);
+    let s = this.addZero(seconds);
+    return `${h}:${m}:${s}`;
+  }
+
+  addZero(input){
+    let str = input.toString();
+    if ( str.length == 1 ) {
+      str = "0" + str;
+    }
+    return str;
+  }
+  
   renderChat(){
     let count = 0;
+
     let history = (this.state.chatHistory.map(entry => {
+
       if(entry.usr == "server"){
+
         return (
           <li className="entry" key={count++}>
-            <span className="green">{entry.usr}</span>: <span className="grey" >{entry.msg} </span>
+            <span className="green">{entry.usr}</span><span className="grey">{entry.time ? ` (${entry.time})` : ""}: {entry.msg} </span>
           </li>
         )
       } else
@@ -158,7 +185,7 @@ class Chatroom extends Component {
             ? <span className="red">{entry.usr}</span>
             :<span className="blue" onClick={() => this.manageProfile(entry.usr)}>{entry.usr}</span>
           }
-          : {entry.msg}
+          <span className="grey">{` `}({entry.time})</span>: {entry.msg}
         </li>
       )
     }))
