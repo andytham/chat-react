@@ -3,11 +3,11 @@ const url = require("../server-var.js");
 
 
 module.exports = function () {
-  let chatHistory = [{usr: 'server', msg: 'welcome to the chatroom!'}]
+  let chatHistory = [{usr: 'server', msg: 'welcome to the chatroom!', time: ''}]
   axios.get(`${url.CHAT_HISTORY_API}`).then( data => {
     chatHistory = data.data;
   }).catch(err => {
-    console.log("somethig is not going right");
+    console.log('most likely no server found');
   })
 
   // function broadcastMessage(message) {
@@ -20,7 +20,8 @@ module.exports = function () {
     axios.post(`${url.CHAT_HISTORY_API}`,
     {
       usr: entry.usr,
-      msg: entry.msg
+      msg: entry.msg,
+      time: entry.time
     })
     .then(res => {
       // console.log(res);
