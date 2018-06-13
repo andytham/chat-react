@@ -22,9 +22,10 @@ class Profile extends Component {
   }
   componentDidMount(){
     try {
+      console.log("trying to grab YOUR profile at url: ",`${url.PROFILES_API}/name/${this.props.username}`);
       axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
       .then(data => {
-        console.log("nick created");
+        console.log("this is data", data.data);
         this.setState({
           bio: data.data.bio,
           input: data.data.bio

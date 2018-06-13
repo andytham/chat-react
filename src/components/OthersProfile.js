@@ -16,8 +16,10 @@ class OthersProfile extends Component {
 		let self = this;
 		console.log(this.props);
 		if(this.props){
+			console.log("running get ", `${url.PROFILES_API}/name/${this.props.username}`);
 			axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
 			.then(data => {
+				console.log("setting stuff from", data.data);
 				self.setState({
 					username: data.data.nickname,
 					bio: data.data.bio
