@@ -46,8 +46,6 @@ class Chatroom extends Component {
         }
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
-
-        console.log('this is probably running too many times');
         // if(this.state.uername != profile.nickname){
           self.setState({
             username: profile.nickname
@@ -146,7 +144,6 @@ class Chatroom extends Component {
 
   renderChat(){
     let count = 0;
-    console.log('rendering chat');
     let history = (this.state.chatHistory.map(entry => {
       if(entry.usr == "server"){
         return (
