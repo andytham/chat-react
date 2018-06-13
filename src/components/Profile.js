@@ -26,11 +26,27 @@ class Profile extends Component {
       axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
       .then(data => {
         console.log("this is data", data.data);
-        this.setState({
-          bio: data.data.bio,
-          input: data.data.bio
-        })
-      
+
+
+        if (!data.data){
+          axios.post(`${url.PROFILES_API}`,
+          {
+            nickname: this.props.username,
+            bio: ""
+          }).then( res => {
+            console.log('created new entry');
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          })}
+          else {
+          this.setState({
+            bio: data.data.bio,
+            input: data.data.bio
+          })
+        }
+
       })
       .catch(err => {
         console.log(err);
@@ -118,7 +134,7 @@ class Profile extends Component {
           <span className="status">Logged in as: </span>{this.props.username}
         </div>
         <div className="status-wrapper">
-          <span className="status"> Status: </span> 
+          <span className="status"> Status: </span>
         <TextField
           className="profile-bio"
           value={this.state.input}
