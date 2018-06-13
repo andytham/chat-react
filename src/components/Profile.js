@@ -24,7 +24,7 @@ class Profile extends Component {
     try {
       axios.get(`${url.PROFILES_API}/name/${this.props.username}`)
       .then(data => {
-        
+        console.log("nick created");
         this.setState({
           bio: data.data.bio,
           input: data.data.bio
@@ -33,6 +33,7 @@ class Profile extends Component {
       })
       .catch(err => {
         console.log(err);
+        console.log("posting");
         axios.post(`${url.PROFILES_API}`,
         {
           nickname: this.props.username,
@@ -61,6 +62,7 @@ class Profile extends Component {
       editing: false,
     })
     self = this;
+    console.log("trying to patch to ",`${url.PROFILES_API}/name/${this.props.username}`, `with this as bio ${this.state.input}`);
     axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
       bio: this.state.input
     })
