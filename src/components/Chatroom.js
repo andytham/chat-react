@@ -8,6 +8,7 @@ import './Chatroom.css';
 
 import { Redirect } from 'react-router-dom';
 import Profile from './Profile';
+import OthersProfile from './OthersProfile';
 import lock from '../auth-config';
 import socket from '../socket.js';
 
@@ -21,7 +22,8 @@ class Chatroom extends Component {
       chatHistory,
       input: "",
       username: "",
-      loggedIn: true
+      loggedIn: true,
+      showProfile: false
     }
     this.chat = React.createRef();
     this.onInput = this.onInput.bind(this)
@@ -30,6 +32,7 @@ class Chatroom extends Component {
     this.onJoin = this.onJoin.bind(this)
     this.getHistory = this.getHistory.bind(this)
     this.updateChat = this.updateChat.bind(this)
+    this.manageProfile = this.manageProfile.bind(this)
   }
   componentWillReceiveProps(nextProps){
   }
@@ -43,10 +46,12 @@ class Chatroom extends Component {
         }
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
-        self.setState({
-          username: profile.nickname
-        },
-        self.onJoin(profile.nickname));
+        // if(this.state.uername != profile.nickname){
+          self.setState({
+            username: profile.nickname
+          },
+          self.onJoin(profile.nickname));
+        // }
       });
     });
     lock.on("authorization_error", function(authResult){
@@ -55,15 +60,29 @@ class Chatroom extends Component {
       })
     })
   }
+  // componentWillReceiveProps(nextProps){
+  //   console.log(nextProps);
+  // }
 
-  componentDidUpdate(){
-    //receive response back from socket
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log("state", this.state);
+  //   console.log("nextstate",nextState);
+  //   if(this.state.input != nextState.input || this.state.username != nextState.username){
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState){
+
     this.state.client.receive(this.updateChat)
-
     //scroll chat to the bottom
+
     if(this.state.username){
       this.chat.current.scrollTo(0, this.chat.current.scrollHeight)
     }
+  
   }
 
   getHistory(){
@@ -71,9 +90,11 @@ class Chatroom extends Component {
   }
 
   updateChat(entry){
-    this.setState({
-      chatHistory: entry
-    })
+    if(this.state.chatHistory != entry){
+      this.setState({
+        chatHistory: entry
+      })
+    }
   }
 
   onJoin(user){
@@ -86,6 +107,26 @@ class Chatroom extends Component {
     this.setState({
       input: e.target.value
     })
+  }
+
+  manageProfile(getName){
+    if(this.state.showProfile == true){
+      if (this.state.profileName == getName){
+        this.setState({
+          showProfile: false,
+          profileName: ""
+        })
+      } else {
+        this.setState({
+          profileName: getName
+        })
+      }
+    } else {
+      this.setState({
+        showProfile: true,
+        profileName: getName
+      })
+    }
   }
 
   onSendMessage(){
@@ -107,7 +148,7 @@ class Chatroom extends Component {
       if(entry.usr == "server"){
         return (
           <li className="entry" key={count++}>
-            <span className="green">{entry.usr}</span>: {entry.msg}
+            <span className="green">{entry.usr}</span>: <span className="grey" >{entry.msg} </span>
           </li>
         )
       } else
@@ -115,7 +156,7 @@ class Chatroom extends Component {
         <li className="entry" key={count++}>
           {this.state.username == entry.usr
             ? <span className="red">{entry.usr}</span>
-            :<span className="blue">{entry.usr}</span>
+            :<span className="blue" onClick={() => this.manageProfile(entry.usr)}>{entry.usr}</span>
           }
           : {entry.msg}
         </li>
@@ -125,46 +166,45 @@ class Chatroom extends Component {
   }
 
   render() {
-    // console.log('chatroom render');
-    // console.log('current user', this.props.username);
-    // const poop = this.props.username
-    // console.log(poop);
-    // this.setState({
-    //   username: poop
-    // })
-    // console.log(this.state.username, 'state ussername');
-    // if(!this.state.username){
-    //   this.setState({
-    //     username: this.props.username
-    //   })
-    // }
+    // console.log(this.state);
+    // console.log('why is this so slow');
     if (this.state.loggedIn && this.state.username) {
       return(
-        <div className="chat-window">
-          <Profile  username={this.state.username}/>
-          <div className="chat-title"></div>
-          <ul className="chat-history" ref={this.chat}>
-              {this.state.chatHistory ? this.renderChat() : "loading"}
-          </ul>
-          <div className="input-wrapper">
-            <TextField
-              className="chat-input"
-              autoFocus={true}
-              placeholder="Enter a message."
-              rows={4}
-              rowsMax={4}
-              onChange={this.onInput}
-              value={this.state.input}
-              onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
-            />
-            <Button className="enter-msg" onClick={this.onSendMessage}>
-              Enter
-            </Button>
+        <div className="chatroom">
+          <div className="chat-window chat-width"> 
+            <div className="chat-title"></div>
+            <ul className="chat-history" ref={this.chat}>
+                {this.state.chatHistory ? this.renderChat() : "loading..."}
+            </ul>
+            <div className="input-wrapper">
+              <TextField
+                className="chat-input"
+                autoFocus={true}
+                placeholder="Enter a message."
+                rows={4}
+                rowsMax={4}
+                onChange={this.onInput}
+                value={this.state.input}
+                onKeyPress={e => (e.key === 'Enter' ? this.onSendMessage() : null)}
+              />
+              <Button className="enter-msg" onClick={this.onSendMessage}>
+                Enter
+              </Button>
+            </div>
           </div>
+          <div className="profiles">
+            <Profile  username={this.state.username}/>
+              {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : ""}
+          </div> 
         </div>
       )
     } else if (this.state.loggedIn){
-      return (<div>Redirecting...</div>)
+      let myStorage = window.localStorage;
+      console.log(JSON.parse(myStorage.profile).nickname);
+      this.setState({
+        username: JSON.parse(myStorage.profile).nickname
+      })
+      return (<div className="redirect">Redirecting...</div>)
     } else { return <Redirect to="/" /> }
 
   }

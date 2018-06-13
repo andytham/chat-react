@@ -5,6 +5,13 @@ ul{
   height: 100%;
 }
 
+.chatroom{
+  display: flex;
+  flex-direction: column;
+}
+.redirect{
+  text-align: center;
+}
 
 .blue{
   color: rgb(1, 151, 208);
@@ -17,18 +24,24 @@ ul{
 .green{
   color: rgb(150, 192, 95);
 }
+.grey{
+  color: #d1d1d1;
+}
 .chat-window{
   margin: 0 auto;
-  width: 460px;
+
   padding: 9px;
   border: 3px #FE6B8B solid;
-  height: 50%;
+  height: 450px;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
+.chat-width{
+  width: 360px;
+}
 
 .chat-history{
   height: 100%;
