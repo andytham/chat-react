@@ -84,7 +84,7 @@ class Chatroom extends Component {
     if(this.state.username){
       this.chat.current.scrollTo(0, this.chat.current.scrollHeight)
     }
-  
+
   }
 
   getHistory(){
@@ -143,7 +143,7 @@ class Chatroom extends Component {
     let currentTime = this.stringifyTime(h, m, s);
     this.state.client.message({
       usr: this.state.username,
-      msg: this.state.input, 
+      msg: this.state.input,
       time: currentTime
     }, (err) => {
       return console.log(err);
@@ -165,7 +165,7 @@ class Chatroom extends Component {
     }
     return str;
   }
-  
+
   renderChat(){
     let count = 0;
 
@@ -198,7 +198,7 @@ class Chatroom extends Component {
     if (this.state.loggedIn && this.state.username) {
       return(
         <div className="chatroom">
-          <div className="chat-window chat-width"> 
+          <div className="chat-window chat-width">
             <div className="chat-title"></div>
             <ul className="chat-history" ref={this.chat}>
                 {this.state.chatHistory ? this.renderChat() : "loading..."}
@@ -222,15 +222,15 @@ class Chatroom extends Component {
           <div className="profiles">
             <Profile  username={this.state.username}/>
               {this.state.showProfile ? <OthersProfile username={this.state.profileName }/> : ""}
-          </div> 
+          </div>
         </div>
       )
     } else if (this.state.loggedIn){
-      let myStorage = window.localStorage;
-      console.log(JSON.parse(myStorage.profile).nickname);
-      this.setState({
-        username: JSON.parse(myStorage.profile).nickname
-      })
+      // let myStorage = window.localStorage;
+      // console.log(JSON.parse(myStorage.profile).nickname);
+      // this.setState({
+      //   username: JSON.parse(myStorage.profile).nickname
+      // })
       return (<div className="redirect">Redirecting...</div>)
     } else { return <Redirect to="/" /> }
 
