@@ -46,6 +46,7 @@ ul{
 .chat-history{
   height: 100%;
   overflow: auto;
+  overflow-x: hidden;
 }
 .input-wrapper{
   /* align-self: flex-end; */
