@@ -9,7 +9,7 @@ let url = {
 
 	// FRONT_END: "http://localhost:3000",
 	// FRONT_END: "http://ec2-18-219-41-84.us-east-2.compute.amazonaws.com:3000",
-	FRONT_END: "http://chat.andytham.com/",
+	FRONT_END: "http://chat.andytham.com",
 
 }
 
