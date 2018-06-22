@@ -36,8 +36,7 @@ class Chatroom extends Component {
     this.stringifyTime = this.stringifyTime.bind(this)
     this.addZero = this.addZero.bind(this)
   }
-  componentWillReceiveProps(nextProps){
-  }
+  
   componentDidMount(){
     let self = this
     lock.on("authenticated", function(authResult) {
