@@ -1,7 +1,6 @@
 const path = require('path');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require('dotenv-webpack');
 
 const config = {
   entry: [
@@ -46,10 +45,6 @@ const config = {
     hash: false,
     template: "./index.html"
   }),
-  new Dotenv({
-    path: path.resolve(__dirname, '.env'), // Path to .env file (this is the default)
-    safe: false // load .env.example (defaults to "false" which does not use dotenv-safe)
-  }) //thanks to this issue in stack overflow: https://stackoverflow.com/questions/44934340/using-dotenv-module-with-react
 
   ],
   node: { //let's you use file system
