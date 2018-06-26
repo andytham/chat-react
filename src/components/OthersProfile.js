@@ -8,7 +8,7 @@ class OthersProfile extends Component {
 		super(props);
 		this.state = {
 			username: "",
-			bio: ""
+			status: ""
 		  };
 	}
   componentDidMount(){
@@ -22,7 +22,7 @@ class OthersProfile extends Component {
 				console.log("setting stuff from", data.data);
 				self.setState({
 					username: data.data.nickname,
-					bio: data.data.bio
+					status: data.data.status
 				})
 			})
 			.catch(err => {
@@ -43,7 +43,7 @@ class OthersProfile extends Component {
 						{this.state.username}'s profile
 					</div>	
 					<div className="status">	
-						{this.state.bio ? this.state.bio : "no status"}
+						{this.state.status ? this.state.status : "no status"}
 					</div>
 				</div>
 			</div>

@@ -13,7 +13,7 @@ class Profile extends Component {
       editing: false,
       input: "",
       redirect: false,
-      bio: ""
+      status: ""
     }
     this.onSave = this.onSave.bind(this)
     this.onDelete = this.onDelete.bind(this)
@@ -32,7 +32,7 @@ class Profile extends Component {
           axios.post(`${url.PROFILES_API}`,
           {
             nickname: this.props.username,
-            bio: ""
+            status: ""
           }).then( res => {
             console.log('created new entry');
             console.log(res);
@@ -42,8 +42,8 @@ class Profile extends Component {
           })}
           else {
           this.setState({
-            bio: data.data.bio,
-            input: data.data.bio
+            status: data.data.status,
+            input: data.data.status
           })
         }
 
@@ -54,7 +54,7 @@ class Profile extends Component {
         axios.post(`${url.PROFILES_API}`,
         {
           nickname: this.props.username,
-          bio: ""
+          status: ""
         }).then( res => {
           console.log('created new entry');
           console.log(res);
@@ -79,14 +79,14 @@ class Profile extends Component {
       editing: false,
     })
     self = this;
-    console.log("trying to patch to ",`${url.PROFILES_API}/name/${this.props.username}`, `with this as bio ${this.state.input}`);
+    console.log("trying to patch to ",`${url.PROFILES_API}/name/${this.props.username}`, `with this as status ${this.state.input}`);
     axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
-      bio: this.state.input
+      status: this.state.input
     })
     .then(()=>{
       console.log('patch success');
       self.setState({
-        bio: this.state.input
+        status: this.state.input
       })
     })
     .catch(err=>{console.log(err);})
@@ -94,13 +94,13 @@ class Profile extends Component {
   onDelete(){
     self = this;
     axios.patch(`${url.PROFILES_API}/name/${this.props.username}`, {
-      bio: ""
+      status: ""
     })
     .then(()=>{
       console.log('patch success');
       self.setState({
         input: "",
-        bio: ""
+        status: ""
       })
       self.onSave();
     })
@@ -108,7 +108,7 @@ class Profile extends Component {
       console.log(err);
       self.setState({
         input: "",
-        bio: ""
+        status: ""
       })
       self.onSave();
     })
@@ -136,7 +136,7 @@ class Profile extends Component {
         <div className="status-wrapper">
           <span className="status"> Status: </span>
         <TextField
-          className="profile-bio"
+          className="profile-status"
           value={this.state.input}
           onChange={this.nameInput}
           disabled={!this.state.editing}
