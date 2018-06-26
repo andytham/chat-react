@@ -6,8 +6,10 @@ module.exports = function () {
   let chatHistory = [{usr: 'server', msg: 'welcome to the chatroom!', time: ''}]
   axios.get(`${url.CHAT_HISTORY_API}`).then( data => {
     chatHistory = data.data;
+    console.log("connected to api");
   }).catch(err => {
     console.log('most likely no server found');
+    console.log(err);
   })
 
   // function broadcastMessage(message) {
